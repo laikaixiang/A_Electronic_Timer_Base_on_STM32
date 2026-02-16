@@ -1299,7 +1299,7 @@ Memory Map of the image
     0x08000242   0x08000242   0x00000000   Code   RO         3705    .text               c_w.l(indicate_semi.o)
     0x08000242   0x08000242   0x00000004   Code   RO         3514    i.BusFault_Handler  stm32f10x_it.o
     0x08000246   0x08000246   0x00000002   PAD
-    0x08000248   0x08000248   0x00000034   Code   RO         3366    i.Buzzer_Init       buzzer.o
+    0x08000248   0x08000248   0x00000034   Code   RO         3369    i.Buzzer_Init       buzzer.o
     0x0800027c   0x0800027c   0x00000002   Code   RO         3515    i.DebugMon_Handler  stm32f10x_it.o
     0x0800027e   0x0800027e   0x00000018   Code   RO         3196    i.Delay_ms          delay.o
     0x08000296   0x08000296   0x0000002e   Code   RO         3198    i.Delay_us          delay.o
@@ -1315,7 +1315,7 @@ Memory Map of the image
     0x08000524   0x08000524   0x00000058   Code   RO         3334    i.Key_GetNum        key.o
     0x0800057c   0x0800057c   0x0000002c   Code   RO         3335    i.Key_Init          key.o
     0x080005a8   0x080005a8   0x00000034   Code   RO         3291    i.LED_Init          led.o
-    0x080005dc   0x080005dc   0x0000002c   Code   RO         3397    i.LightSensor_Init  lightsensor.o
+    0x080005dc   0x080005dc   0x0000002c   Code   RO         3400    i.LightSensor_Init  lightsensor.o
     0x08000608   0x08000608   0x00000004   Code   RO         3517    i.MemManage_Handler  stm32f10x_it.o
     0x0800060c   0x0800060c   0x00000002   Code   RO         3518    i.NMI_Handler       stm32f10x_it.o
     0x0800060e   0x0800060e   0x00000002   PAD
@@ -1327,19 +1327,19 @@ Memory Map of the image
     0x080006b8   0x080006b8   0x00000020   Code   RO         1777    i.RCC_APB2PeriphClockCmd  stm32f10x_rcc.o
     0x080006d8   0x080006d8   0x00000002   Code   RO         3520    i.SVC_Handler       stm32f10x_it.o
     0x080006da   0x080006da   0x00000002   PAD
-    0x080006dc   0x080006dc   0x000001dc   Code   RO         3414    i.Seg_DispTime      seg_display.o
-    0x080008b8   0x080008b8   0x00000054   Code   RO         3415    i.Seg_Init          seg_display.o
-    0x0800090c   0x0800090c   0x0000001c   Code   RO         3416    i.Seg_Off           seg_display.o
-    0x08000928   0x08000928   0x00000158   Code   RO         3418    i.Seg_ShowREADY     seg_display.o
-    0x08000a80   0x08000a80   0x0000018c   Code   RO         3419    i.Seg_ShowSingleNum  seg_display.o
+    0x080006dc   0x080006dc   0x000001dc   Code   RO         3417    i.Seg_DispTime      seg_display.o
+    0x080008b8   0x080008b8   0x00000054   Code   RO         3418    i.Seg_Init          seg_display.o
+    0x0800090c   0x0800090c   0x0000001c   Code   RO         3419    i.Seg_Off           seg_display.o
+    0x08000928   0x08000928   0x00000158   Code   RO         3421    i.Seg_ShowREADY     seg_display.o
+    0x08000a80   0x08000a80   0x0000018c   Code   RO         3422    i.Seg_ShowSingleNum  seg_display.o
     0x08000c0c   0x08000c0c   0x00000008   Code   RO           24    i.SetSysClock       system_stm32f10x.o
     0x08000c14   0x08000c14   0x000000e0   Code   RO           25    i.SetSysClockTo72   system_stm32f10x.o
     0x08000cf4   0x08000cf4   0x00000002   Code   RO         3521    i.SysTick_Handler   stm32f10x_it.o
-    0x08000cf6   0x08000cf6   0x00000040   Code   RO         3469    i.Sys_Display_Process  main.o
+    0x08000cf6   0x08000cf6   0x00000040   Code   RO         3472    i.Sys_Display_Process  main.o
     0x08000d36   0x08000d36   0x00000002   PAD
-    0x08000d38   0x08000d38   0x00000078   Code   RO         3470    i.Sys_Key_Process   main.o
+    0x08000d38   0x08000d38   0x00000078   Code   RO         3473    i.Sys_Key_Process   main.o
     0x08000db0   0x08000db0   0x00000060   Code   RO           27    i.SystemInit        system_stm32f10x.o
-    0x08000e10   0x08000e10   0x00000028   Code   RO         3471    i.TIM2_IRQHandler   main.o
+    0x08000e10   0x08000e10   0x00000028   Code   RO         3474    i.TIM2_IRQHandler   main.o
     0x08000e38   0x08000e38   0x00000006   Code   RO         2415    i.TIM_ClearFlag     stm32f10x_tim.o
     0x08000e3e   0x08000e3e   0x00000006   Code   RO         2416    i.TIM_ClearITPendingBit  stm32f10x_tim.o
     0x08000e44   0x08000e44   0x00000018   Code   RO         2421    i.TIM_Cmd           stm32f10x_tim.o
@@ -1356,14 +1356,14 @@ Memory Map of the image
     0x08001028   0x08001028   0x00000040   Code   RO         3225    i.Timer_Reset       timer.o
     0x08001068   0x08001068   0x0000001c   Code   RO         3226    i.Timer_Resume      timer.o
     0x08001084   0x08001084   0x00000004   Code   RO         3522    i.UsageFault_Handler  stm32f10x_it.o
-    0x08001088   0x08001088   0x00000044   Code   RO         3472    i.main              main.o
+    0x08001088   0x08001088   0x00000044   Code   RO         3475    i.main              main.o
     0x080010cc   0x080010cc   0x0000005a   Code   RO         3588    x$fpl$dfixu         fz_ws.l(dfixu.o)
     0x08001126   0x08001126   0x00000026   Code   RO         3592    x$fpl$dfltu         fz_ws.l(dflt_clz.o)
     0x0800114c   0x0800114c   0x00000154   Code   RO         3598    x$fpl$dmul          fz_ws.l(dmul.o)
     0x080012a0   0x080012a0   0x0000009c   Code   RO         3601    x$fpl$dnaninf       fz_ws.l(dnaninf.o)
     0x0800133c   0x0800133c   0x0000000c   Code   RO         3603    x$fpl$dretinf       fz_ws.l(dretinf.o)
     0x08001348   0x08001348   0x00000000   Code   RO         3605    x$fpl$usenofp       fz_ws.l(usenofp.o)
-    0x08001348   0x08001348   0x0000000a   Data   RO         3421    .constdata          seg_display.o
+    0x08001348   0x08001348   0x0000000a   Data   RO         3424    .constdata          seg_display.o
     0x08001352   0x08001352   0x00000002   PAD
     0x08001354   0x08001354   0x00000020   Data   RO         3758    Region$$Table       anon$$obj.o
 
@@ -1374,7 +1374,7 @@ Memory Map of the image
 
     0x20000000   0x08001374   0x00000006   Data   RW         3228    .data               timer.o
     0x20000006   0x0800137a   0x00000002   PAD
-    0x20000008   0x0800137c   0x00000010   Data   RW         3473    .data               main.o
+    0x20000008   0x0800137c   0x00000010   Data   RW         3476    .data               main.o
     0x20000018        -       0x00000060   Zero   RW         3632    .bss                c_w.l(libspace.o)
     0x20000078        -       0x00000200   Zero   RW            2    HEAP                startup_stm32f10x_md.o
     0x20000278        -       0x00000400   Zero   RW            1    STACK               startup_stm32f10x_md.o

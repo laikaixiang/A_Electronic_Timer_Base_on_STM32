@@ -33,3 +33,4 @@
 .\objects\key.o: Hardware\seg_display.h
 .\objects\key.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\key.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\key.o: .\System\Timer.h

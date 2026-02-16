@@ -2,6 +2,7 @@
 #include "Delay.h"
 #include "Key.h"
 #include "seg_display.h"
+#include "Timer.h"
 
 // 按键状态枚举
 typedef enum
