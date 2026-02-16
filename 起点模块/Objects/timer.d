@@ -1,4 +1,5 @@
 .\objects\timer.o: System\Timer.c
+.\objects\timer.o: System\Timer.h
 .\objects\timer.o: .\Start\stm32f10x.h
 .\objects\timer.o: .\Start\core_cm3.h
 .\objects\timer.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -28,6 +29,3 @@
 .\objects\timer.o: .\Library\stm32f10x_usart.h
 .\objects\timer.o: .\Library\stm32f10x_wwdg.h
 .\objects\timer.o: .\Library\misc.h
-.\objects\timer.o: .\Hardware\seg_display.h
-.\objects\timer.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\timer.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

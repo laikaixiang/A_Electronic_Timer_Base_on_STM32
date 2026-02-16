@@ -1,146 +1,72 @@
-#include "stm32f10x.h"                  // Device header
-#include "Delay.h"
 #include "Key.h"
-#include "seg_display.h"
-#include "Timer.h"
 
-// 按键状态枚举
-typedef enum
-{
-    KEY_NONE = 0,       // 0：无按键
-    KEY1_SHORT_PRESS,  	// 1：按键1短按
-	KEY1_LONG_PRESS,   	// 2：按键1长按
-	KEY2_SHORT_PRESS,  	// 3：按键2短按
-	KEY2_LONG_PRESS   	// 4：按键2长按
-} Key_StatusTypeDef;
+// 阈值设定（基于主循环一次大约10ms的估算）
+// 短按消抖：约40ms (4 * 10ms)
+// 长按判定：约800ms (80 * 10ms)
+#define CNT_DEBOUNCE    4
+#define CNT_LONG_PRESS  80 
 
-// 长按判定阈值（可根据需求调整，单位ms）
-#define KEY_LONG_TIME    1000    
-// 消抖阈值
-#define KEY_DEBOUNCE_TIME 20  
-
-/**
-  * 函    数：按键初始化
-  * 参    数：无
-  * 返 回 值：无
-  */
 void Key_Init(void)
 {
-	/*开启时钟*/
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);		//开启GPIOA的时钟
-	
-	/*GPIO初始化*/
-	GPIO_InitTypeDef GPIO_InitStructure;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Pin = Key_1 | Key_1;
-	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);						//将PA0和PA1引脚初始化为上拉输入
-}
-
-/**
-  * 函    数：按键获取键码
-  * 参    数：无
-  * 返 回 值：按下按键的键码值，返回0则代表没有按键按下
-  * 注意事项：此函数是阻塞式操作，当按键按住不放时，函数会卡住，直到按键松手
-  */
-uint8_t Key_GetNum(void)
-{
-	uint8_t KeyNum = 0;		//定义变量，默认键码值为0
-	
-	if (GPIO_ReadInputDataBit(GPIOA, Key_1) == 0)			//读PA0输入寄存器的状态，如果为0，则代表按键1按下
-	{
-		Delay_ms(20);											//延时消抖
-		while (GPIO_ReadInputDataBit(GPIOA, Key_1) == 0);	//等待按键松手
-		Delay_ms(20);											//延时消抖
-		KeyNum = 1;												//置键码为1
-	}
-	
-	if (GPIO_ReadInputDataBit(GPIOA, Key_1) == 0)			//读PA1输入寄存器的状态，如果为0，则代表按键2按下
-	{
-		Delay_ms(20);											//延时消抖
-		while (GPIO_ReadInputDataBit(GPIOA, Key_1) == 0);	//等待按键松手
-		Delay_ms(20);											//延时消抖
-		KeyNum = 2;												//置键码为2
-	}
-	
-	return KeyNum;			//返回键码值，如果没有按键按下，所有if都不成立，则键码为默认值0
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+    
+    GPIO_InitTypeDef GPIO_InitStructure;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; // 上拉输入
+    GPIO_InitStructure.GPIO_Pin = KEY_PIN;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(KEY_GPIO_PORT, &GPIO_InitStructure);
 }
 
 /**
   * 函    数：获取按键事件（支持长短按）
   * 参    数：无
-  * 返 回 值：
+  * 返 回 值：event
   *         0：无按键
-  *         1：按键1短按
-  *         2：按键1长按
-  *         3：按键2短按
-  *         4：按键2长按
+  *         1：按键短按
+  *         2：按键长按
   * 说    明：非阻塞式改造（也可根据需求改为阻塞式）
   */
 uint8_t Key_GetEvent(void)
 {
-    uint8_t KeyEvent = 0;
-    uint32_t PressTime = 0;
+    static uint8_t key_state = 0;       // 0:无按键, 1:按下确认中, 2:等待释放(已触发长按)
+    static uint32_t press_cnt = 0;      // 按下计数器
 
-    // 检测按键1（PA1）
-    if(Key_GetNum() == 1)
+    uint8_t current_level = GPIO_ReadInputDataBit(KEY_GPIO_PORT, KEY_PIN);
+    uint8_t event = KEY_NONE;
+
+    // 检测到低电平（按下）
+    if (current_level == 0)
     {
-        // 记录按下时长
-        while(GPIO_ReadInputDataBit(GPIOA, Key_1) == 0)
+        if (key_state == 0 || key_state == 1)
         {
-            Delay_ms(5);
-            PressTime += 5;
-            Seg_ShowREADY();
-            // 防止死循环：超过长按阈值后退出计数
-            if(PressTime >= KEY_LONG_TIME)
+            press_cnt++; // 持续按下，计数增加
+            key_state = 1;
+
+            // 达到长按阈值
+            if (press_cnt >= CNT_LONG_PRESS)
             {
-                break;
+                event = KEY_LONG_PRESS; // 触发长按事件
+                key_state = 2;          // 进入等待释放状态，避免重复触发
             }
         }
-
-        // 判断长短按
-        if(PressTime >= KEY_LONG_TIME)
-        {
-            KeyEvent = 2;  // 按键1长按
-        }
-        else if(PressTime >= KEY_DEBOUNCE_TIME)  // 有效短按（至少超过消抖时间）
-        {
-            KeyEvent = 1;  // 按键1短按
-        }
-        
-        // 松手消抖
-        Delay_ms(KEY_DEBOUNCE_TIME);
     }
-
-    // 检测按键2（PA2）
-    if(Key_GetNum() == 2)
+	
+    // 检测到高电平（松开）
+    else
     {
-        PressTime = 0;
-        // 记录按下时长
-        while(GPIO_ReadInputDataBit(GPIOA, Key_2) == 0)
+        if (key_state == 1) // 之前是按下状态
         {
-            Delay_ms(5);
-            PressTime += 5;
-            
-            if(PressTime >= KEY_LONG_TIME)
+            // 如果按下时间超过消抖阈值，且未达到长按
+            if (press_cnt >= CNT_DEBOUNCE && press_cnt < CNT_LONG_PRESS)
             {
-                break;
+                event = KEY_SHORT_PRESS; // 触发短按事件
             }
         }
-
-        // 判断长短按
-        if(PressTime >= KEY_LONG_TIME)
-        {
-            KeyEvent = 4;  // 按键2长按
-        }
-        else if(PressTime >= KEY_DEBOUNCE_TIME)
-        {
-            KeyEvent = 3;  // 按键2短按
-        }
         
-        // 松手消抖
-        Delay_ms(KEY_DEBOUNCE_TIME);
+        // 复位状态
+        key_state = 0;
+        press_cnt = 0;
     }
 
-    return KeyEvent;
+    return event;
 }
