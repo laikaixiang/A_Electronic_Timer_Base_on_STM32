@@ -1,13 +1,18 @@
 #include "Timer.h"
 
 // 计时变量
-static uint32_t Total_Overflows = 0; // 溢出次数记录
+static uint32_t Total_Overflows = 0; // 溢出次数记录 数值上等于秒
 static uint8_t  Timer_Is_Running = 0; // 运行标志位
 
 // 硬件配置参数：10kHz频率 (0.1ms周期)，计数10000次溢出(1秒)
 #define TIMER_PSC   7200
 #define TIMER_ARR   10000 
 
+/**
+  * 函    数：定时中断初始化
+  * 参    数：无
+  * 返 回 值：无
+  */
 void Timer_Init(void)
 {
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
@@ -36,21 +41,36 @@ void Timer_Init(void)
     Timer_Is_Running = 0;
 }
 
-// 暂停
+/**
+  * 函    数：暂停定时器
+  * 参    数：无
+  * 返 回 值：无
+  * 说    明：暂停后CNT值保持不变，中断也会暂停
+  */
 void Timer_Pause(void)
 {
     TIM_Cmd(TIM2, DISABLE);
     Timer_Is_Running = 0;
 }
 
-// 恢复/开始
+/**
+  * 函    数：暂停后重新开始定时器
+  * 参    数：无
+  * 返 回 值：无
+  * 说    明：从暂停时的CNT值继续计数
+  */
 void Timer_Resume(void)
 {
     TIM_Cmd(TIM2, ENABLE);
     Timer_Is_Running = 1;
 }
 
-// 复位归零
+/**
+  * 函    数：定时器归零
+  * 参    数：无
+  * 返 回 值：无
+  * 说    明：将CNT值清零，同时清空溢出计数，归零后保持当前运行/暂停状态
+  */
 void Timer_Reset(void)
 {
     TIM_Cmd(TIM2, DISABLE);      // 停止
@@ -60,7 +80,12 @@ void Timer_Reset(void)
     Timer_Is_Running = 0;
 }
 
-// 获取总毫秒数
+/**
+  * 函    数：获取定时器总计时时间(个ARR，1ARR=0.1ms)
+  * 参    数：无
+  * 返 回 值：总计时时间，单位ms (基于72MHz主频，10kHz计数频率)
+  * 说    明：结合溢出次数+当前CNT值，扩展计时范围
+  */
 uint32_t Timer_GetTotalTimeMs(void)
 {
     // 计算公式：溢出次数 * 1000ms + (当前CNT * 0.1ms) / 10
@@ -69,7 +94,11 @@ uint32_t Timer_GetTotalTimeMs(void)
     return time_ms;
 }
 
-// 中断服务函数
+/**
+  * 函    数：获取定时器当前状态
+  * 参    数：无
+  * 返 回 值：1-运行 0-暂停
+  */
 void TIM2_IRQHandler(void)
 {
     if (TIM_GetITStatus(TIM2, TIM_IT_Update) == SET)

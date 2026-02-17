@@ -37,3 +37,4 @@
 .\objects\main.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\main.o: .\Hardware\Key.h
 .\objects\main.o: .\System\Timer.h
+.\objects\main.o: code\main_logic.h
