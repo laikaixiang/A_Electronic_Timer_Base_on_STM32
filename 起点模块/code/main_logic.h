@@ -15,5 +15,7 @@ void Handle_StateMachine(uint8_t event);
 // 3. 处理输出 (显示/LED/蜂鸣器)
 void Handle_Display(void);
 
+// 4. 无线信号轮询查询
+void MainLogic_CheckWireless(void);
 
 #endif

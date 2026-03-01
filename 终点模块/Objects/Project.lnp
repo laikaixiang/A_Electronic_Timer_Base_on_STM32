@@ -26,12 +26,17 @@
 ".\objects\stm32f10x_usart.o"
 ".\objects\stm32f10x_wwdg.o"
 ".\objects\delay.o"
+".\objects\timer.o"
 ".\objects\led.o"
 ".\objects\key.o"
 ".\objects\buzzer.o"
 ".\objects\lightsensor.o"
+".\objects\seg_display.o"
+".\objects\nrf24l01.o"
 ".\objects\main.o"
 ".\objects\stm32f10x_it.o"
+".\objects\main_all.o"
+".\objects\main_logic.o"
 --strict --scatter ".\Objects\Project.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

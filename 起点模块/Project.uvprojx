@@ -725,6 +725,16 @@
               <FileType>5</FileType>
               <FilePath>.\Hardware\seg_display.h</FilePath>
             </File>
+            <File>
+              <FileName>gt24_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\gt24_drv.c</FilePath>
+            </File>
+            <File>
+              <FileName>gt24_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\gt24_drv.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

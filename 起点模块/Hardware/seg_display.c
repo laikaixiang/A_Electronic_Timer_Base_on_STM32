@@ -124,7 +124,7 @@ void Seg_Off(void)
     GPIO_SetBits(BIT_PORT, ALL_BIT_PINS);
 }
 
-// 修复原有Seg_ShowString逻辑（适配计时显示）
+// 计时显示
 void Seg_ShowString(const char *num_str)
 {
     uint8_t i = 0, dot_pos = 0xFF; // 初始化为0xFF（无小数点）

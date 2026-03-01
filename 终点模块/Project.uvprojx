@@ -660,6 +660,16 @@
               <FileType>5</FileType>
               <FilePath>.\System\Delay.h</FilePath>
             </File>
+            <File>
+              <FileName>Timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\System\Timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>Timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\System\Timer.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -705,6 +715,31 @@
               <FileType>5</FileType>
               <FilePath>.\Hardware\LightSensor.h</FilePath>
             </File>
+            <File>
+              <FileName>seg_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\seg_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>seg_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\seg_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>NRF24L01.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\NRF24L01.c</FilePath>
+            </File>
+            <File>
+              <FileName>NRF24L01.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\NRF24L01.h</FilePath>
+            </File>
+            <File>
+              <FileName>NRF24L01_Define.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\NRF24L01_Define.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -734,6 +769,16 @@
               <FileName>main_all.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\code\main_all.c</FilePath>
+            </File>
+            <File>
+              <FileName>main_logic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\code\main_logic.c</FilePath>
+            </File>
+            <File>
+              <FileName>main_logic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\code\main_logic.h</FilePath>
             </File>
           </Files>
         </Group>

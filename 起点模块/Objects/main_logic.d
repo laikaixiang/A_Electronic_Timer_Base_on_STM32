@@ -35,4 +35,6 @@
 .\objects\main_logic.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\main_logic.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\main_logic.o: .\Hardware\Buzzer.h
-.\objects\main_logic.o: .\Hardware\LED.h
+.\objects\main_logic.o: .\Hardware\LightSensor.h
+.\objects\main_logic.o: .\Hardware\gt24_drv.h
+.\objects\main_logic.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

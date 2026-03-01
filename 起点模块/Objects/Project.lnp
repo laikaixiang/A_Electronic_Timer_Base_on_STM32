@@ -32,6 +32,7 @@
 ".\objects\buzzer.o"
 ".\objects\lightsensor.o"
 ".\objects\seg_display.o"
+".\objects\gt24_drv.o"
 ".\objects\main.o"
 ".\objects\stm32f10x_it.o"
 ".\objects\main_all.o"
