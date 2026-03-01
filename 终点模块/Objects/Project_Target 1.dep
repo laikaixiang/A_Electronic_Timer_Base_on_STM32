@@ -900,10 +900,10 @@ I (.\Library\stm32f10x_usart.h)(0x4D783BB4)
 I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
 I (.\Library\misc.h)(0x4D783BB4)
 F (.\Hardware\Buzzer.h)(0x615ACF08)()
-F (.\Hardware\LightSensor.c)(0x6530EBEB)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\code -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\lightsensor.o --omf_browse .\objects\lightsensor.crf --depend .\objects\lightsensor.d)
+F (.\Hardware\LightSensor.c)(0x69A3FAA1)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\code -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\lightsensor.o --omf_browse .\objects\lightsensor.crf --depend .\objects\lightsensor.d)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
 I (.\Start\core_cm3.h)(0x4D523B58)
-I (D:\keil_v5\ARM\ARMCC\include\stdint.h)(0x588B8344)
+I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588B8344)
 I (.\Start\system_stm32f10x.h)(0x4D783CAA)
 I (.\code\stm32f10x_conf.h)(0x4D99A59E)
 I (.\Library\stm32f10x_adc.h)(0x4D783BB4)
@@ -929,7 +929,8 @@ I (.\Library\stm32f10x_tim.h)(0x4D783BB4)
 I (.\Library\stm32f10x_usart.h)(0x4D783BB4)
 I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
 I (.\Library\misc.h)(0x4D783BB4)
-F (.\Hardware\LightSensor.h)(0x615AD02F)()
+I (Hardware\LightSensor.h)(0x69A3FAA1)
+F (.\Hardware\LightSensor.h)(0x69A3FAA1)()
 F (.\Hardware\seg_display.c)(0x69A3BF27)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\code -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\seg_display.o --omf_browse .\objects\seg_display.crf --depend .\objects\seg_display.d)
 I (Hardware\seg_display.h)(0x69A349DB)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
@@ -1028,7 +1029,7 @@ I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
 I (.\Library\misc.h)(0x4D783BB4)
 I (.\System\Delay.h)(0x6130920D)
 I (.\Hardware\Buzzer.h)(0x615ACF08)
-I (.\Hardware\LightSensor.h)(0x615AD02F)
+I (.\Hardware\LightSensor.h)(0x69A3FAA1)
 I (.\Hardware\LED.h)(0x615AC609)
 I (.\Hardware\seg_display.h)(0x69A349DB)
 I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x588B8344)
@@ -1069,7 +1070,7 @@ I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
 I (.\Library\misc.h)(0x4D783BB4)
 F (.\code\stm32f10x_it.h)(0x4D99A59E)()
 F (.\code\main_all.c)(0x698DFBB8)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\code -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\main_all.o --omf_browse .\objects\main_all.crf --depend .\objects\main_all.d)
-F (.\code\main_logic.c)(0x69A3C251)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\code -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\main_logic.o --omf_browse .\objects\main_logic.crf --depend .\objects\main_logic.d)
+F (.\code\main_logic.c)(0x69A43A7C)(--c99 -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\code -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-I.\RTE\_Target_1-ID:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="524" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\main_logic.o --omf_browse .\objects\main_logic.crf --depend .\objects\main_logic.d)
 I (code\main_logic.h)(0x69A3B83F)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
 I (.\Start\core_cm3.h)(0x4D523B58)
@@ -1105,7 +1106,7 @@ I (.\Hardware\seg_display.h)(0x69A349DB)
 I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x588B8344)
 I (D:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x588B8344)
 I (.\Hardware\Buzzer.h)(0x615ACF08)
-I (.\Hardware\LightSensor.h)(0x615AD02F)
+I (.\Hardware\LightSensor.h)(0x69A3FAA1)
 I (.\Hardware\NRF24L01.h)(0x69A33B9D)
 I (.\Hardware\NRF24L01_Define.h)(0x69A33B9D)
 I (.\System\Delay.h)(0x6130920D)

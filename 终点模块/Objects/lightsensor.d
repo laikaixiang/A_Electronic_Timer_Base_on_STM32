@@ -28,3 +28,4 @@
 .\objects\lightsensor.o: .\Library\stm32f10x_usart.h
 .\objects\lightsensor.o: .\Library\stm32f10x_wwdg.h
 .\objects\lightsensor.o: .\Library\misc.h
+.\objects\lightsensor.o: Hardware\LightSensor.h
