@@ -88,7 +88,7 @@ void Timer_Reset(void)
   */
 uint32_t Timer_GetTotalTimeMs(void)
 {
-    // 计算公式：溢出次数 * 1000ms + (当前CNT * 0.1ms) / 10
+    // 计算公式：溢出次数 * 1000ms + (当前CNT 0.1ms/个) / 10
     // 假设 ARR=10000 (1秒), PSC=7200 (10kHz, 0.1ms)
     uint32_t time_ms = (Total_Overflows * 1000) + (TIM_GetCounter(TIM2) / 10);
     return time_ms;

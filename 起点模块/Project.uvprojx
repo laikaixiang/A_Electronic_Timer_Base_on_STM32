@@ -726,14 +726,29 @@
               <FilePath>.\Hardware\seg_display.h</FilePath>
             </File>
             <File>
-              <FileName>gt24_drv.c</FileName>
+              <FileName>NRF24L01.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Hardware\gt24_drv.c</FilePath>
+              <FilePath>.\Hardware\NRF24L01.c</FilePath>
             </File>
             <File>
-              <FileName>gt24_drv.h</FileName>
+              <FileName>NRF24L01.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\Hardware\gt24_drv.h</FilePath>
+              <FilePath>.\Hardware\NRF24L01.h</FilePath>
+            </File>
+            <File>
+              <FileName>NRF24L01_Define.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\NRF24L01_Define.h</FilePath>
+            </File>
+            <File>
+              <FileName>Max7219_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\Max7219_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>Max7219_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\Max7219_display.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -774,6 +789,11 @@
               <FileName>main_logic.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\code\main_logic.h</FilePath>
+            </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\code\test.c</FilePath>
             </File>
           </Files>
         </Group>

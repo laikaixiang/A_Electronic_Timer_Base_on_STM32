@@ -47,6 +47,22 @@ int main(void)
         
         // 5. 如果需要控制循环频率，可以使用极短的延时
         // 但为了数码管刷新效果，建议不要加长延时
-        // Delay_us(500); 
+		// Delay_us(500); 
     }
 }
+
+//#include "stm32f10x.h"
+//#include "Max7219_display.h"
+//#include "Delay.h"
+
+//int main(void)
+//{
+//   
+//	MAX7219_Init();
+
+//	uint32_t t = 0;
+//    while(1)
+//    {
+//		MAX7219_AnimLoading_kunkun(4);
+//    }
+//}

@@ -99,6 +99,12 @@ void Timer_Ms2Str(uint32_t ms, char *buf);
 
 void Seg_ShowREADY(void);
 
+void Seg_ShowCONN(void);
+
+void Seg_ShowWAIT(void);
+
+// 显示时间，输入的单位为0.1ms
+// ms: 0.1ms长度的时间计数，1ARR = 0.1ms
 void Seg_DispTime(uint32_t Timer_ARR);
 
 #endif /* __SEG_DISPLAY_H */

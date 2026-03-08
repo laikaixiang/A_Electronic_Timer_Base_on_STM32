@@ -1,38 +1,43 @@
 #include "main_logic.h"
 #include "Key.h"
 #include "Timer.h"
-#include "seg_display.h"
+#include "Max7219_display.h"
+#include "Max7219_display.h"
 #include "Buzzer.h"
 #include "LightSensor.h"
-#include "gt24_drv.h"
+#include "NRF24L01.h"         
+#include "NRF24L01_Define.h"  
+#include "Delay.h"
 #include <string.h>
 #include <stdio.h>
 
-// --- 系统状态 ---
+// --- 系统状态 (System States) ---
 typedef enum {
-    SYS_INIT_HANDSHAKE, // 上电握手阶段
-    SYS_IDLE,           // 就绪态
-    SYS_RUNNING,        // 计时中
-    SYS_PAUSE           // 结束/暂停
+    SYS_INIT_HANDSHAKE, 
+    SYS_IDLE,           
+    SYS_RUNNING,        
+    SYS_PAUSE           
 } SysState_t;
 
 static SysState_t sys_state = SYS_INIT_HANDSHAKE;
-static uint8_t rx_buf[32];
-static uint8_t tx_buf[32];
 
 // 握手重试计数
 static uint32_t handshake_timer = 0;
 static uint8_t handshake_retry = 0;
 
-// 外部显示接口声明
-extern void Seg_ShowString(const char *str); 
+extern void Max7219_ShowString(const char *str); 
 
-// 辅助：发送指令后立即切回接收
+/**
+ * @brief  辅助函数：发送指令
+ */
 static void Send_Cmd(const char *cmd) {
-    memset(tx_buf, 0, 32);
-    strcpy((char*)tx_buf, cmd);
-    GT24_TxPacket(tx_buf);
-    GT24_SetRxMode();
+    // 发送前清空底层 FIFO 缓存
+    NRF24L01_FlushTx(); 
+    NRF24L01_FlushRx(); 
+    
+    memcpy(NRF24L01_TxPacket, cmd, 4);      
+    NRF24L01_Send();  // 阻塞发送
+    NRF24L01_Rx();    // 切换接收
 }
 
 // --- 接口实现 ---
@@ -43,95 +48,97 @@ void MainLogic_Init(void)
     handshake_retry = 0;
     
     Timer_Reset();
-    GT24_Init();
+    NRF24L01_Init(); 
+	Max7219_Init();
     
-    // 硬件检查：如果模块没插好，卡死显示 Err
-    if(GT24_Check() != 0) {
-        while(1) { Seg_ShowString("0001"); }
-    }
+    uint8_t check_val = NRF24L01_ReadReg(NRF24L01_CONFIG);
+    if(check_val == 0x00) { while(1) { Max7219_ShowString("ERR2"); } }
+    if(check_val == 0xFF) { while(1) { Max7219_ShowString("ERR4"); } }
     
-    // 初始化完成，切入接收模式准备握手
-    GT24_SetRxMode();
+    NRF24L01_Rx();
 }
 
-// 主循环中调用的无线检查
+/**
+ * @brief 无线检查
+ */
 void MainLogic_CheckWireless(void)
 {
-    if(GT24_RxPacket(rx_buf)) 
+    if(NRF24L01_Receive() == 1) 
     {
-        // 1. 收到握手请求 "PING"
-        if(strncmp((char*)rx_buf, "PING", 4) == 0) {
-            if(sys_state == SYS_INIT_HANDSHAKE) {
-                // 握手成功，发出提示音，进入就绪
-                Buzzer_ON(); 
-                for(int i=0;i<20000;i++); // 极短延时提示音
-                Buzzer_OFF();
-                sys_state = SYS_IDLE; 
-            }
-        }
-        // 2. 收到开始指令 "STAR"
-        else if(strncmp((char*)rx_buf, "STAR", 4) == 0) {
-            // 只有在空闲或暂停时才允许远程启动
+        // 拷贝指令后，立刻清零接收数组，防止硬件误触发导致重复读取同一包
+        char cmd_buf[5] = {0};
+        memcpy(cmd_buf, NRF24L01_RxPacket, 4);
+        memset(NRF24L01_RxPacket, 0, 4);
+
+        // 1. 收到开始指令 "STAR"
+        if(strncmp(cmd_buf, "STAR", 4) == 0) {
             if(sys_state == SYS_IDLE || sys_state == SYS_PAUSE) {
                 Timer_Reset();
-                Timer_Resume();
+                // 启动前清除 STM32 的硬件挂起中断，防止秒数突变
+                TIM_ClearFlag(TIM2, TIM_FLAG_Update); 
+                Timer_Resume(); 
                 sys_state = SYS_RUNNING;
             }
         }
+        // 2. 收到暂停/停止指令 "STOP"
+        else if(strncmp(cmd_buf, "STOP", 4) == 0) {
+            // 给无线接收也加上盲区保护,防止对方一开跑就发来错乱的STOP信号
+            if(sys_state == SYS_RUNNING && Timer_GetTotalTimeMs() > 1000) {
+                Timer_Pause();
+                sys_state = SYS_PAUSE;
+            }
+        }
+        // 3. 收到复位指令 "RSET"
+        else if(strncmp(cmd_buf, "RSET", 4) == 0) {
+            Timer_Reset();
+            sys_state = SYS_IDLE;
+        }
+        // 4. 收到握手请求 "PING"
+        else if(strncmp(cmd_buf, "PING", 4) == 0) {
+            if(sys_state == SYS_INIT_HANDSHAKE) {
+                sys_state = SYS_IDLE; 
+            }
+        }
     }
 }
 
+/**
+ * @brief 状态机与事件处理
+ */
 void Handle_StateMachine(uint8_t event)
 {
-    // --- 1. 初始化握手逻辑 (非阻塞) ---
     if(sys_state == SYS_INIT_HANDSHAKE) {
         handshake_timer++;
-        // 利用主循环计数做非阻塞延时
         if(handshake_timer > 300) { 
             handshake_timer = 0;
             if(handshake_retry < 5) {
-                // 主动发 PING
-                memset(tx_buf, 0, 32);
-                strcpy((char*)tx_buf, "PING");
-                if(GT24_TxPacket(tx_buf) == 1) {
-                    // 收到ACK，对方在线
+                memcpy(NRF24L01_TxPacket, "PING", 4);
+                if(NRF24L01_Send() == 1) { 
                     sys_state = SYS_IDLE;
-                    Buzzer_ON(); for(int i=0;i<20000;i++); Buzzer_OFF();
                 }
-                GT24_SetRxMode();
+                NRF24L01_Rx(); 
                 handshake_retry++;
             } else {
-                // 重试5次失败，放弃主动，显示等待 (Wait)
-                // 用户可以按键强制进入IDLE，或者等待对方发PING
-                // 这里为了方便，直接进IDLE但显示Wait
-                sys_state = SYS_IDLE;
+                sys_state = SYS_IDLE; 
             }
         }
         return;
     }
 
-    // --- 2. 终点逻辑：光敏传感器 ---
-    if(sys_state == SYS_RUNNING) {
-        if(LightSensor_Get() == 1) { // 假设1触发
-            Timer_Pause();
-            sys_state = SYS_PAUSE;
-            Buzzer_ON(); for(int i=0;i<50000;i++); Buzzer_OFF();
-        }
-    }
-
-    // --- 3. 按键逻辑 ---
+    // --- 按键逻辑 ---
     switch (sys_state)
     {
         case SYS_IDLE:
         case SYS_PAUSE:
             if (event == KEY1_PRESS_SHORT) {
-                // 发令：先发无线，再跑本地
-                Send_Cmd("STAR");
+                Send_Cmd("STAR"); 
                 Timer_Reset();
-                Timer_Resume();
+                TIM_ClearFlag(TIM2, TIM_FLAG_Update); // 同样强制清除中断挂起
+                Timer_Resume(); 
                 sys_state = SYS_RUNNING;
             }
             else if (event == KEY1_PRESS_LONG) {
+                Send_Cmd("RSET");
                 Timer_Reset();
                 sys_state = SYS_IDLE;
             }
@@ -139,8 +146,20 @@ void Handle_StateMachine(uint8_t event)
 
         case SYS_RUNNING:
             if (event == KEY1_PRESS_SHORT) {
+                // 【启用按键盲区】：强制拦截前 1000ms 内的所有按键，绝对防止双击/抖动导致的误停！
+                if(Timer_GetTotalTimeMs() < 1000) {
+					Max7219_ShowWAIT();
+					break;
+				} 
+                
                 Timer_Pause();
+                Send_Cmd("STOP");
                 sys_state = SYS_PAUSE;
+            }
+            else if (event == KEY1_PRESS_LONG) {
+                Timer_Reset();
+                Send_Cmd("RSET");
+                sys_state = SYS_IDLE;
             }
             break;
     }
@@ -148,37 +167,30 @@ void Handle_StateMachine(uint8_t event)
 
 /**
  * @brief 显示刷新逻辑
- * @note  完全保留了你之前的结构，只修改了具体的显示函数调用
  */
 void Handle_Display(void)
 {
     uint32_t total_ms = 0;
-    char disp_buf[10];
 
     switch (sys_state)
     {
         case SYS_INIT_HANDSHAKE:
-            if(handshake_retry < 5) Seg_ShowString("Conn");
-            else Seg_ShowString("Wait");
+            if(handshake_retry < 5) Max7219_ShowCONN();
+            else Max7219_ShowWAIT();
             break;
 
         case SYS_IDLE:
-            Seg_ShowREADY; // 显示 READY
+            Max7219_ShowREADY(); 
             break;
 
         case SYS_RUNNING:
-            // 实时显示
-            total_ms = Timer_GetTotalTimeMs();
-            // 假设Timer_GetTotalTimeMs返回的是毫秒，显示格式为 秒.毫秒
-            sprintf(disp_buf, "%04d", (int)(total_ms / 10)); 
-            Seg_ShowString(disp_buf);
+            total_ms = Timer_GetTotalTimeMs(); 
+            Max7219_DispTime(total_ms * 10);
             break;
 
         case SYS_PAUSE:
-            // 显示定格时间
             total_ms = Timer_GetTotalTimeMs();
-            sprintf(disp_buf, "%04d", (int)(total_ms / 10));
-            Seg_ShowString(disp_buf);
+            Max7219_DispTime(total_ms * 10);
             break;
     }
 }

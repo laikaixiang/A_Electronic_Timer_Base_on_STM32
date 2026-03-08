@@ -17,8 +17,8 @@ typedef struct {
 // --- 2. 按键列表 (在这里添加更多按键!) ---
 // 假设：Key1在 PA1, Key2在 PA2, Key3在 PB5
 static Key_t Key_List[] = {
-    // 端口,   引脚,       初始状态, 计数,  短按ID,            长按ID
-    {GPIOA, GPIO_Pin_1,   0,       0,   KEY1_PRESS_SHORT, KEY1_PRESS_LONG}, 
+    // 端口,   引脚,       初始状态, 计数,  短按ID,            长按ID 
+    {GPIOB, GPIO_Pin_1,   0,       0,   KEY1_PRESS_SHORT, KEY1_PRESS_LONG}, 
 //    {GPIOA, GPIO_Pin_2,   0,       0,   KEY2_PRESS_SHORT, KEY2_PRESS_LONG},
     // {GPIOB, GPIO_Pin_5,   0,       0,   KEY3_PRESS_SHORT, KEY3_PRESS_LONG}, // 扩展示例
 };

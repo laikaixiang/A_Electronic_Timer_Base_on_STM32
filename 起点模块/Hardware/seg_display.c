@@ -268,3 +268,119 @@ void Seg_DispTime(uint32_t Timer_ARR){
 		Seg_ShowREADY();
 	}
 }
+
+void Seg_ShowCONN(void)
+{
+	// 共阳极数码管段码表：C(3位)、o(2位)、n(1位)、n(0位)
+    const uint8_t ready_seg_code[] = {0x39, 0x5c, 0x54, 0x54};
+    const uint8_t pos_list[] = {3, 2, 1, 0}; // 要显示的位置
+
+    // 遍历每个位置显示对应字符
+    for(int i=0; i<4; i++)
+    {
+        // 1. 熄灭所有位选和段脚（防重影）
+        GPIO_SetBits(BIT_PORT, ALL_BIT_PINS);
+        GPIO_ResetBits(SEG_PORT, ALL_SEG_PINS);
+
+        // 2. 位选控制
+        uint8_t pos = pos_list[i];
+        switch(pos){
+            case 0:
+                GPIO_WriteBit(GPIOB,BIT_PIN_UNIT,Bit_SET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_TEN,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_HUND,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_THOU,Bit_RESET);
+                break;
+            case 1:
+                GPIO_WriteBit(GPIOB,BIT_PIN_TEN,Bit_SET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_UNIT,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_HUND,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_THOU,Bit_RESET);
+                break;
+            case 2:
+                GPIO_WriteBit(GPIOB,BIT_PIN_HUND,Bit_SET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_TEN,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_UNIT,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_THOU,Bit_RESET);
+                break;
+			case 3:
+                GPIO_WriteBit(GPIOB,BIT_PIN_THOU,Bit_SET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_TEN,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_UNIT,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_HUND,Bit_RESET);
+                break;
+        }
+
+        // 3. 输出对应字符的段码
+        uint8_t seg_code = ready_seg_code[i];
+        if((seg_code & 0x01) == 0) GPIO_SetBits(SEG_PORT, SEG_PIN_A);
+        if((seg_code & 0x02) == 0) GPIO_SetBits(SEG_PORT, SEG_PIN_B);
+        if((seg_code & 0x04) == 0) GPIO_SetBits(SEG_PORT, SEG_PIN_C);
+        if((seg_code & 0x08) == 0) GPIO_SetBits(SEG_PORT, SEG_PIN_D);
+        if((seg_code & 0x10) == 0) GPIO_SetBits(SEG_PORT, SEG_PIN_E);
+        if((seg_code & 0x20) == 0) GPIO_SetBits(SEG_PORT, SEG_PIN_F);
+        if((seg_code & 0x40) == 0) GPIO_SetBits(SEG_PORT, SEG_PIN_G);
+        GPIO_SetBits(SEG_PORT, SEG_PIN_DP); // 小数点始终熄灭
+
+        // 4. 延时保持显示
+        Delay_ms(2);
+    }
+}
+
+void Seg_ShowWAIT(void)
+{
+	// 共阳极数码管段码表：-(3位)、-(2位)、-(1位)、-(0位)
+    const uint8_t ready_seg_code[] = {0x40, 0x40, 0x40, 0x40};
+    const uint8_t pos_list[] = {3, 2, 1, 0}; // 要显示的位置
+
+    // 遍历每个位置显示对应字符
+    for(int i=0; i<4; i++)
+    {
+        // 1. 熄灭所有位选和段脚（防重影）
+        GPIO_SetBits(BIT_PORT, ALL_BIT_PINS);
+        GPIO_ResetBits(SEG_PORT, ALL_SEG_PINS);
+
+        // 2. 位选控制
+        uint8_t pos = pos_list[i];
+        switch(pos){
+            case 0:
+                GPIO_WriteBit(GPIOB,BIT_PIN_UNIT,Bit_SET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_TEN,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_HUND,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_THOU,Bit_RESET);
+                break;
+            case 1:
+                GPIO_WriteBit(GPIOB,BIT_PIN_TEN,Bit_SET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_UNIT,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_HUND,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_THOU,Bit_RESET);
+                break;
+            case 2:
+                GPIO_WriteBit(GPIOB,BIT_PIN_HUND,Bit_SET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_TEN,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_UNIT,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_THOU,Bit_RESET);
+                break;
+			case 3:
+                GPIO_WriteBit(GPIOB,BIT_PIN_THOU,Bit_SET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_TEN,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_UNIT,Bit_RESET);
+                GPIO_WriteBit(GPIOB,BIT_PIN_HUND,Bit_RESET);
+                break;
+        }
+
+        // 3. 输出对应字符的段码
+        uint8_t seg_code = ready_seg_code[i];
+        if((seg_code & 0x01) == 0) GPIO_SetBits(SEG_PORT, SEG_PIN_A);
+        if((seg_code & 0x02) == 0) GPIO_SetBits(SEG_PORT, SEG_PIN_B);
+        if((seg_code & 0x04) == 0) GPIO_SetBits(SEG_PORT, SEG_PIN_C);
+        if((seg_code & 0x08) == 0) GPIO_SetBits(SEG_PORT, SEG_PIN_D);
+        if((seg_code & 0x10) == 0) GPIO_SetBits(SEG_PORT, SEG_PIN_E);
+        if((seg_code & 0x20) == 0) GPIO_SetBits(SEG_PORT, SEG_PIN_F);
+        if((seg_code & 0x40) == 0) GPIO_SetBits(SEG_PORT, SEG_PIN_G);
+        GPIO_SetBits(SEG_PORT, SEG_PIN_DP); // 小数点始终熄灭
+
+        // 4. 延时保持显示
+        Delay_ms(2);
+    }
+}

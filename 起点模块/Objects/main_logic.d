@@ -2,7 +2,7 @@
 .\objects\main_logic.o: code\main_logic.h
 .\objects\main_logic.o: .\Start\stm32f10x.h
 .\objects\main_logic.o: .\Start\core_cm3.h
-.\objects\main_logic.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\main_logic.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\main_logic.o: .\Start\system_stm32f10x.h
 .\objects\main_logic.o: .\code\stm32f10x_conf.h
 .\objects\main_logic.o: .\Library\stm32f10x_adc.h
@@ -31,10 +31,11 @@
 .\objects\main_logic.o: .\Library\misc.h
 .\objects\main_logic.o: .\Hardware\Key.h
 .\objects\main_logic.o: .\System\Timer.h
-.\objects\main_logic.o: .\Hardware\seg_display.h
-.\objects\main_logic.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\main_logic.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\main_logic.o: .\Hardware\Max7219_display.h
 .\objects\main_logic.o: .\Hardware\Buzzer.h
 .\objects\main_logic.o: .\Hardware\LightSensor.h
-.\objects\main_logic.o: .\Hardware\gt24_drv.h
-.\objects\main_logic.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\main_logic.o: .\Hardware\NRF24L01.h
+.\objects\main_logic.o: .\Hardware\NRF24L01_Define.h
+.\objects\main_logic.o: .\System\Delay.h
+.\objects\main_logic.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\main_logic.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

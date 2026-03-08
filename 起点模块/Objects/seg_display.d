@@ -2,7 +2,7 @@
 .\objects\seg_display.o: Hardware\seg_display.h
 .\objects\seg_display.o: .\Start\stm32f10x.h
 .\objects\seg_display.o: .\Start\core_cm3.h
-.\objects\seg_display.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\seg_display.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\objects\seg_display.o: .\Start\system_stm32f10x.h
 .\objects\seg_display.o: .\code\stm32f10x_conf.h
 .\objects\seg_display.o: .\Library\stm32f10x_adc.h
@@ -29,7 +29,7 @@
 .\objects\seg_display.o: .\Library\stm32f10x_usart.h
 .\objects\seg_display.o: .\Library\stm32f10x_wwdg.h
 .\objects\seg_display.o: .\Library\misc.h
-.\objects\seg_display.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\seg_display.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\seg_display.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\seg_display.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\seg_display.o: .\System\Delay.h
-.\objects\seg_display.o: D:\keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\seg_display.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

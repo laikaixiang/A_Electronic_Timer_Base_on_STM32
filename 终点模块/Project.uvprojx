@@ -740,6 +740,16 @@
               <FileType>5</FileType>
               <FilePath>.\Hardware\NRF24L01_Define.h</FilePath>
             </File>
+            <File>
+              <FileName>Max7219_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\Max7219_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>Max7219_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\Max7219_display.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -779,6 +789,11 @@
               <FileName>main_logic.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\code\main_logic.h</FilePath>
+            </File>
+            <File>
+              <FileName>test.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\code\test.c</FilePath>
             </File>
           </Files>
         </Group>

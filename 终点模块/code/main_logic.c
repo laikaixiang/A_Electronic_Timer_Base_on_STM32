@@ -1,7 +1,8 @@
 #include "main_logic.h"
 #include "Key.h"
 #include "Timer.h"
-#include "seg_display.h"
+#include "Max7219_display.h"
+#include "Max7219_display.h"
 #include "Buzzer.h"
 #include "LightSensor.h"
 #include "NRF24L01.h"         
@@ -24,7 +25,7 @@ static SysState_t sys_state = SYS_INIT_HANDSHAKE;
 static uint32_t handshake_timer = 0;
 static uint8_t handshake_retry = 0;
 
-extern void Seg_ShowString(const char *str); 
+extern void Max7219_ShowString(const char *str); 
 
 /**
  * @brief  辅助函数：发送指令
@@ -48,10 +49,11 @@ void MainLogic_Init(void)
     
     Timer_Reset();
     NRF24L01_Init(); 
+	Max7219_Init();
     
     uint8_t check_val = NRF24L01_ReadReg(NRF24L01_CONFIG);
-    if(check_val == 0x00) { while(1) { Seg_ShowString("0002"); } }
-    if(check_val == 0xFF) { while(1) { Seg_ShowString("0004"); } }
+    if(check_val == 0x00) { while(1) { Max7219_ShowString("ERR2"); } }
+    if(check_val == 0xFF) { while(1) { Max7219_ShowString("ERR4"); } }
     
     NRF24L01_Rx();
 }
@@ -156,7 +158,7 @@ void Handle_StateMachine(uint8_t event)
             if (event == KEY1_PRESS_SHORT) {
                 // 【启用按键盲区】：强制拦截前 1000ms 内的所有按键，绝对防止双击/抖动导致的误停！
                 if(Timer_GetTotalTimeMs() < 1000) {
-					Seg_ShowWAIT();
+					Max7219_ShowWAIT();
 					break;
 				} 
                 
@@ -183,22 +185,22 @@ void Handle_Display(void)
     switch (sys_state)
     {
         case SYS_INIT_HANDSHAKE:
-            if(handshake_retry < 5) Seg_ShowCONN();
-            else Seg_ShowWAIT();
+            if(handshake_retry < 5) Max7219_ShowCONN();
+            else Max7219_ShowWAIT();
             break;
 
         case SYS_IDLE:
-            Seg_ShowREADY(); 
+            Max7219_ShowREADY(); 
             break;
 
         case SYS_RUNNING:
             total_ms = Timer_GetTotalTimeMs(); 
-            Seg_DispTime(total_ms * 10);
+            Max7219_DispTime(total_ms * 10);
             break;
 
         case SYS_PAUSE:
             total_ms = Timer_GetTotalTimeMs();
-            Seg_DispTime(total_ms * 10);
+            Max7219_DispTime(total_ms * 10);
             break;
     }
 }

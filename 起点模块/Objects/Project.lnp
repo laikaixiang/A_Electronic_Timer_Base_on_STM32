@@ -32,11 +32,13 @@
 ".\objects\buzzer.o"
 ".\objects\lightsensor.o"
 ".\objects\seg_display.o"
-".\objects\gt24_drv.o"
+".\objects\nrf24l01.o"
+".\objects\max7219_display.o"
 ".\objects\main.o"
 ".\objects\stm32f10x_it.o"
 ".\objects\main_all.o"
 ".\objects\main_logic.o"
+".\objects\test.o"
 --strict --scatter ".\Objects\Project.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

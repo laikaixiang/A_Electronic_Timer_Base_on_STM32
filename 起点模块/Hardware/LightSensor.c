@@ -1,4 +1,5 @@
 #include "stm32f10x.h"                  // Device header
+#include "LightSensor.h"
 
 /**
   * 函    数：光敏传感器初始化
@@ -8,12 +9,12 @@
 void LightSensor_Init(void)
 {
 	/*开启时钟*/
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);		//开启GPIOB的时钟
+	RCC_APB2PeriphClockCmd(Light_sensor_DO_RCC, ENABLE);		//开启GPIOB的时钟
 	
 	/*GPIO初始化*/
 	GPIO_InitTypeDef GPIO_InitStructure;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
+	GPIO_InitStructure.GPIO_Pin = Light_sensor_DO_Pin;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);						//将PB13引脚初始化为上拉输入
 }
@@ -25,5 +26,5 @@ void LightSensor_Init(void)
   */
 uint8_t LightSensor_Get(void)
 {
-	return GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_13);			//返回PB13输入寄存器的状态
+	return GPIO_ReadInputDataBit(Light_sensor_DO_GPIO, Light_sensor_DO_Pin);			//返回PB13输入寄存器的状态
 }

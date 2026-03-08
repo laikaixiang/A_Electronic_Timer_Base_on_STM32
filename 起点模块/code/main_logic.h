@@ -6,16 +6,16 @@
 // 逻辑模块初始化
 void MainLogic_Init(void);
 
-// 1. 获取输入 (键盘)
+// 获取按键输入
 uint8_t Key_GetEvent(void);
 
-// 2. 处理逻辑 (状态机 + 事件处理)
+// 处理主逻辑，包含状态机和收发动作
 void Handle_StateMachine(uint8_t event);
 
-// 3. 处理输出 (显示/LED/蜂鸣器)
+// 处理数码管时间显示刷新
 void Handle_Display(void);
 
-// 4. 无线信号轮询查询
+// 无线信号轮询接收与处理
 void MainLogic_CheckWireless(void);
 
 #endif
