@@ -28,13 +28,5 @@
 .\objects\main.o: .\Library\stm32f10x_usart.h
 .\objects\main.o: .\Library\stm32f10x_wwdg.h
 .\objects\main.o: .\Library\misc.h
+.\objects\main.o: .\Hardware\Max7219_display.h
 .\objects\main.o: .\System\Delay.h
-.\objects\main.o: .\Hardware\Buzzer.h
-.\objects\main.o: .\Hardware\LightSensor.h
-.\objects\main.o: .\Hardware\LED.h
-.\objects\main.o: .\Hardware\seg_display.h
-.\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\objects\main.o: .\Hardware\Key.h
-.\objects\main.o: .\System\Timer.h
-.\objects\main.o: code\main_logic.h
