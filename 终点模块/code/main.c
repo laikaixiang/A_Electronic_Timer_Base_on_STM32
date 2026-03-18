@@ -127,4 +127,8 @@ int main(void) {
             refresh_counter = 0;
         }
     }
+//	while(1){
+//		if(VL53L0X_Check_Object_Presence(1250)==0){Display_Distance(1234);}
+//		else{Display_Distance(0000);}
+//	}
 }

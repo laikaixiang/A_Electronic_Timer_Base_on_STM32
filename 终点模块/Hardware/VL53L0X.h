@@ -18,5 +18,6 @@
 // 函数声明
 uint8_t VL53L0X_Init(void);
 uint16_t VL53L0X_ReadDistance_mm(void);
+uint8_t VL53L0X_Check_Object_Presence(uint16_t threshold_mm);
 
 #endif /* __VL53L0X_H */

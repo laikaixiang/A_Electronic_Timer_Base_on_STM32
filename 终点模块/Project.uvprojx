@@ -680,6 +680,16 @@
               <FileType>1</FileType>
               <FilePath>.\System\MYIIC.c</FilePath>
             </File>
+            <File>
+              <FileName>usart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\System\usart1.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\System\usart1.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -769,6 +779,16 @@
               <FileName>VL53L0X.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Hardware\VL53L0X.h</FilePath>
+            </File>
+            <File>
+              <FileName>HLK_LD2410B.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\HLK_LD2410B.c</FilePath>
+            </File>
+            <File>
+              <FileName>HLK_LD2410B.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\HLK_LD2410B.h</FilePath>
             </File>
           </Files>
         </Group>
